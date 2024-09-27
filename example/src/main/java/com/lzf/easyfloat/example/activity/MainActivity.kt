@@ -60,6 +60,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         openSwipeTest.setOnClickListener(this)
         openBorderTest.setOnClickListener(this)
 
+        window_blur.setOnClickListener(this)
+
         // 测试activity中onCreate就启动浮框
 //        showActivityFloat(TAG_1)
     }
@@ -90,6 +92,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             openSecond -> startActivity<SecondActivity>(this)
             openSwipeTest -> startActivity<SwipeTestActivity>(this)
             openBorderTest -> startActivity<BorderTestActivity>(this)
+
+            window_blur -> startActivity<WindowBlurActivity>(this)
 
             else -> return
         }

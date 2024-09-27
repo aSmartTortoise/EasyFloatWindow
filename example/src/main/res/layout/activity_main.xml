@@ -179,6 +179,12 @@
                     style="@style/TextStyle2"
                     android:layout_marginTop="20dp"
                     android:text="Open BorderTestActivity" />
+
+            <TextView
+                android:id="@+id/window_blur"
+                style="@style/TextStyle2"
+                android:layout_marginTop="20dp"
+                android:text="window background blur" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

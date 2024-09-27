@@ -3,17 +3,27 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.lzf.easyfloat.example"
-        minSdkVersion 19
-        targetSdkVersion 31
+        minSdkVersion 31
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
+
+        H37_8295 {
+            storeFile file("../key_store/h37_8295/aosp.keystore")
+            storePassword "android"
+            keyAlias "platform"
+            keyPassword "android"
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+
         release {
             storeFile file("../example/release/easyfloat.keystore")
             storePassword "123123"
@@ -23,11 +33,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.H37_8295
+        }
+
         release {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.H37_8295
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
                     outputFileName = "EasyFloat.apk"

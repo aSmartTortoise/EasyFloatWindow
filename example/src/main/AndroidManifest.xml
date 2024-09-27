@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:sharedUserId="android.uid.system"
         package="com.lzf.easyfloat.example">
 
     <!--系统悬浮窗权限-->
@@ -34,6 +35,9 @@
         <activity android:name=".activity.SwipeTestActivity" />
         <activity android:name=".activity.BorderTestActivity" />
 
+        <activity
+            android:name=".activity.WindowBlurActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
