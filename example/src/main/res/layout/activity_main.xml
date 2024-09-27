@@ -35,6 +35,7 @@
                     android:orientation="horizontal">
 
                 <TextView
+                    android:textColor="@color/text_color"
                         android:id="@+id/open1"
                         style="@style/TextStyle"
                         android:text="open" />
