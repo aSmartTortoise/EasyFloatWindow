@@ -1,15 +1,19 @@
 package com.lzf.easyfloat.example;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
 
 import java.lang.reflect.Method;
 import java.util.function.Consumer;
@@ -21,6 +25,8 @@ import java.util.function.Consumer;
  */
 
 public class BlurWindowHelper {
+
+    private static final String TAG = "BlurWindowHelper";
 
     private WindowManager mWindowManager;
     //窗口背景高斯模糊程度
@@ -49,8 +55,9 @@ public class BlurWindowHelper {
                 mWindowManager.removeView(mView);
             }
         });
-        WindowManager.LayoutParams mLayoutParams = new WindowManager.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
@@ -58,15 +65,14 @@ public class BlurWindowHelper {
                         | WindowManager.LayoutParams.FLAG_SPLIT_TOUCH,
 //                PixelFormat.TRANSLUCENT);//半透明
                 PixelFormat.TRANSPARENT);//全透明
-        mLayoutParams.setTitle("LeapMotorNavigationBar");
-        mLayoutParams.windowAnimations = 0;
-        mLayoutParams.gravity = Gravity.CENTER;
-
+        layoutParams.setTitle("LeapMotorNavigationBar");
+        layoutParams.windowAnimations = 0;
+        layoutParams.gravity = Gravity.CENTER;
+        mWindowManager.addView(mView, layoutParams);
         initBlur();
-
-        mWindowManager.addView(mView, mLayoutParams);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void initBlur() {
         mBackgroundBlurRadius = dp2px(40);
         mBackgroundCornersRadius = dp2px(20);
@@ -79,12 +85,12 @@ public class BlurWindowHelper {
         Consumer<Boolean> windowBlurEnabledListener = this::updateWindowForBlurs;
         mView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
             @Override
-            public void onViewAttachedToWindow(View v) {
+            public void onViewAttachedToWindow(@NonNull View v) {
                 mWindowManager.addCrossWindowBlurEnabledListener(windowBlurEnabledListener);
             }
 
             @Override
-            public void onViewDetachedFromWindow(View v) {
+            public void onViewDetachedFromWindow(@NonNull View v) {
                 mWindowManager.removeCrossWindowBlurEnabledListener(windowBlurEnabledListener);
             }
         });
@@ -92,9 +98,11 @@ public class BlurWindowHelper {
 
 
     private void updateWindowForBlurs(boolean blursEnabled) {
+        Log.d(TAG, "updateWindowForBlurs: blursEnabled:" + blursEnabled);
         // 根据窗口高斯模糊功能是否开启来为窗口设置不同的不透明度
-        mWindowBackgroundDrawable.setAlpha(blursEnabled ? mWindowBackgroundAlphaWithBlur : mWindowBackgroundAlphaNoBlur);//调整背景的透明度
-        setBackgroundBlurRadius(mView);//设置背景模糊程度
+        mWindowBackgroundDrawable.setAlpha(
+                blursEnabled ? mWindowBackgroundAlphaWithBlur : mWindowBackgroundAlphaNoBlur);
+        setBackgroundBlurRadius(mView);
     }
 
     /**
@@ -136,7 +144,8 @@ public class BlurWindowHelper {
         Drawable drawable = null;
         try {
             //调用ViewRootImpl的createBackgroundBlurDrawable方法创建实例
-            Method method_createBackgroundBlurDrawable = viewRootImpl.getClass().getDeclaredMethod("createBackgroundBlurDrawable");
+            Method method_createBackgroundBlurDrawable = viewRootImpl.getClass()
+                    .getDeclaredMethod("createBackgroundBlurDrawable");
             method_createBackgroundBlurDrawable.setAccessible(true);
             drawable = (Drawable) method_createBackgroundBlurDrawable.invoke(viewRootImpl);
             //调用BackgroundBlurDrawable的setBlurRadius方法
