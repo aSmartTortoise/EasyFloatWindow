@@ -17,11 +17,22 @@
         android:id="@+id/btn_show_window"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="50dp"
         android:text="show blur window"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_show_easy_float"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp"
+        android:text="show easy float window"
+        android:textSize="28sp"
+        app:layout_constraintStart_toEndOf="@id/btn_show_window"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

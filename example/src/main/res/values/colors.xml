@@ -23,4 +23,7 @@
     <color name="titleColor">#989898</color>
     <color name="light_gray">#242424</color>
 
+
+    <color name="root_view_bg">#ff191C21</color>
+
 </resources>
