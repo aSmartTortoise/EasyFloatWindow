@@ -2,6 +2,7 @@ package com.lzf.easyfloat.data
 
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import com.lzf.easyfloat.anim.DefaultAnimator
 import com.lzf.easyfloat.enums.ShowPattern
 import com.lzf.easyfloat.enums.SidePattern
@@ -79,5 +80,7 @@ data class FloatConfig(
     internal var needShow: Boolean = true,
 
     // 当layout大小变化后，整体view的位置的摆放
-    var layoutChangedGravity: Int = Gravity.TOP.or(Gravity.START)
+    var layoutChangedGravity: Int = Gravity.TOP.or(Gravity.START),
+    var blurFlag: Boolean = false,
+    var blurCallback: ((windowManager: WindowManager, floatingView: View) -> Unit)? = null
 )

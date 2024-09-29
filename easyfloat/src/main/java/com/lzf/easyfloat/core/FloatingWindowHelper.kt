@@ -9,8 +9,20 @@ import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.os.Build
 import android.os.IBinder
-import android.view.*
-import android.view.WindowManager.LayoutParams.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+import android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+import android.view.WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+import android.view.WindowManager.LayoutParams.MATCH_PARENT
+import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_PANEL
+import android.view.WindowManager.LayoutParams.TYPE_PHONE
+import android.view.WindowManager.LayoutParams.WRAP_CONTENT
 import android.widget.EditText
 import com.lzf.easyfloat.WARN_ACTIVITY_NULL
 import com.lzf.easyfloat.anim.AnimatorManager
@@ -81,7 +93,7 @@ internal class FloatingWindowHelper(val context: Context, var config: FloatConfi
                 type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) TYPE_APPLICATION_OVERLAY
                 else TYPE_PHONE
             }
-            format = PixelFormat.RGBA_8888
+            format = if (config.blurFlag) PixelFormat.TRANSPARENT else PixelFormat.RGBA_8888
             gravity = Gravity.START or Gravity.TOP
             // 设置浮窗以外的触摸事件可以传递给后面的窗口、不自动获取焦点
             flags = if (config.immersionStatusBar)
@@ -125,6 +137,9 @@ internal class FloatingWindowHelper(val context: Context, var config: FloatConfi
         floatingView.visibility = View.INVISIBLE
         // 将frameLayout添加到系统windowManager中
         windowManager.addView(frameLayout, params)
+        if (config.blurFlag) {
+            initBlur(floatingView)
+        }
 
         // 通过重写frameLayout的Touch事件，实现拖拽效果
         frameLayout?.touchListener = object : OnFloatTouchListener {
@@ -159,6 +174,11 @@ internal class FloatingWindowHelper(val context: Context, var config: FloatConfi
 
         setChangedListener()
     }
+
+    private fun initBlur(floatingView: View) {
+        config.blurCallback?.invoke(windowManager, floatingView)
+    }
+
 
     /**
      * 设置布局变化监听，根据变化时的对齐方式，设置浮窗位置

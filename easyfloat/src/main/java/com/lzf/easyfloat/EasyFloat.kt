@@ -3,6 +3,7 @@ package com.lzf.easyfloat
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import android.view.WindowManager
 import com.lzf.easyfloat.core.FloatingWindowManager
 import com.lzf.easyfloat.data.FloatConfig
 import com.lzf.easyfloat.enums.ShowPattern
@@ -338,6 +339,20 @@ class EasyFloat {
                 }
             }
         }
+
+        /**
+         * 设置浮窗是否模糊（背景模糊）
+         * @param blurFlag    是否模糊
+         */
+        fun setBlurEnable(blurFlag: Boolean) =
+            apply { config.blurFlag = blurFlag }
+
+        /**
+         * 设置blurCallback 初始化blur设置项
+         * @param blurCallback    初始化blur设置的回调
+         */
+        fun setBlurCallback(blurCallback: (WindowManager, View) -> Unit) =
+            apply { config.blurCallback = blurCallback }
 
         /**
          * 创建浮窗，包括Activity浮窗和系统浮窗，如若系统浮窗无权限，先进行权限申请
