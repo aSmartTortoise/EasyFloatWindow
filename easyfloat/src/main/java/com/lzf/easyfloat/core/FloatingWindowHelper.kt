@@ -9,6 +9,7 @@ import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -41,6 +42,10 @@ import com.lzf.easyfloat.widget.ParentFrameLayout
  * @Description: 负责具体悬浮窗的创建管理
  */
 internal class FloatingWindowHelper(val context: Context, var config: FloatConfig) {
+
+    companion object {
+        const val TAG = "FloatingWindowHelper"
+    }
 
     interface CreateCallback {
         fun onCreate(success: Boolean)
@@ -359,6 +364,7 @@ internal class FloatingWindowHelper(val context: Context, var config: FloatConfi
                     override fun onAnimationRepeat(animation: Animator) {}
 
                     override fun onAnimationEnd(animation: Animator) {
+                        Log.d(TAG, "onAnimationEnd: ")
                         config.isAnim = false
                         if (!config.immersionStatusBar) {
                             // 不需要延伸到屏幕外了，防止屏幕旋转的时候，浮窗处于屏幕外

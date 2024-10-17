@@ -11,6 +11,7 @@ import com.lzf.easyfloat.EasyFloat
 import com.lzf.easyfloat.enums.ShowPattern
 import com.lzf.easyfloat.enums.SidePattern
 import com.lzf.easyfloat.example.R
+import com.lzf.easyfloat.example.anim.ScaleInOutAnimator
 import com.lzf.easyfloat.example.logger
 import com.lzf.easyfloat.example.startActivity
 import com.lzf.easyfloat.example.widget.*
@@ -275,7 +276,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             .setTag(tag)
             .setShowPattern(ShowPattern.FOREGROUND)
             .setLocation(100, 100)
-            .setAnimator(null)
+            .setAnimator(ScaleInOutAnimator())
             .setFilter(SecondActivity::class.java)
             .setLayout(R.layout.float_app_scale) {
                 val content = it.findViewById<RelativeLayout>(R.id.rlContent)
