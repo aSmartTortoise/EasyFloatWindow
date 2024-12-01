@@ -180,11 +180,23 @@
                     android:layout_marginTop="20dp"
                     android:text="Open BorderTestActivity" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/window_blur"
-                style="@style/TextStyle2"
-                android:layout_marginTop="20dp"
+                style="@style/TextStyle"
                 android:text="window background blur" />
+
+            <TextView
+                android:id="@+id/window_shadow"
+                style="@style/TextStyle"
+                android:text="window shadow" />
+
+        </LinearLayout>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

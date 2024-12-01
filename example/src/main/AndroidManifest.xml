@@ -37,6 +37,8 @@
         <activity
             android:name=".activity.WindowBlurActivity"
             android:exported="false" />
+        <activity android:name=".activity.WindowShadowActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

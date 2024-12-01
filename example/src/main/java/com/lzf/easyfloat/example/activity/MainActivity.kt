@@ -62,6 +62,7 @@ class MainActivity : BaseActivity(), View.OnClickListener {
         openBorderTest.setOnClickListener(this)
 
         window_blur.setOnClickListener(this)
+        window_shadow.setOnClickListener(this)
 
         // 测试activity中onCreate就启动浮框
 //        showActivityFloat(TAG_1)
@@ -95,6 +96,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             openBorderTest -> startActivity<BorderTestActivity>(this)
 
             window_blur -> startActivity<WindowBlurActivity>(this)
+
+            window_shadow -> startActivity<WindowShadowActivity>(this)
 
             else -> return
         }
